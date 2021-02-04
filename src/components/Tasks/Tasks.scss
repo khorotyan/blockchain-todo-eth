@@ -1,0 +1,28 @@
+.Tasks {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e3e9ff;
+
+  &__Wrapper {
+    width: 100%;
+    min-height: 100vh;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &__Body {
+      min-height: 300px;
+      width: 100%;
+      background-color: #ffffff;
+    }
+
+    &__ButtonContainer {
+      margin-top: -24px;
+    }
+  }
+}

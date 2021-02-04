@@ -1,0 +1,15 @@
+.Header {
+  width: 100%;
+  height: 54px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #af7eeb;
+
+  &__AppName {
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    color: #ffffff;
+  }
+}
