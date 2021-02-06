@@ -7,4 +7,10 @@
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: 1px;
+  transition: 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #9d65e2;
+  }
 }
