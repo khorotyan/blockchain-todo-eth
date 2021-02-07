@@ -1,10 +1,12 @@
+@import "../../constants/styles/colors";
+
 .Tasks {
   width: 100%;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #e3e9ff;
+  background-color: $background_color;
 
   &__Wrapper {
     width: 100%;
@@ -18,11 +20,12 @@
     &__Body {
       min-height: 300px;
       width: 100%;
-      background-color: #ffffff;
+      background-color: white;
       padding: 24px 24px 48px 24px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      border-radius: 4px;
     }
 
     &__ButtonContainer {

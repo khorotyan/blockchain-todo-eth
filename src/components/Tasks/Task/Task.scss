@@ -5,12 +5,14 @@
 
   &__Input {
     width: 100%;
+    font-size: 1.4rem !important;
     margin: 0 4px;
   }
 
   &__RemoveButton {
     background-color: transparent;
     border: none;
+    cursor: pointer;
 
     &__Icon {
       width: 20px;

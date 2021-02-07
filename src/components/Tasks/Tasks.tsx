@@ -37,7 +37,7 @@ const Tasks: React.FC = () => {
   const handleTaskCheckClick = (id: string) => {
     const tasksCopy = [...tasks];
     const task = tasksCopy.find(task => task.id === id);
-    
+
     if (task) {
       task.isChecked = !task.isChecked;
       setTasks(tasksCopy);
@@ -47,7 +47,7 @@ const Tasks: React.FC = () => {
   const handleTaskTextChange = (newText: string, id: string) => {
     const tasksCopy = [...tasks];
     const task = tasksCopy.find(task => task.id === id);
-    
+
     if (task) {
       task.text = newText;
       setTasks(tasksCopy);
@@ -57,7 +57,7 @@ const Tasks: React.FC = () => {
   const handleTaskRemove = (id: string) => {
     const tasksCopy = [...tasks];
     const task = tasksCopy.find(task => task.id === id);
-    
+
     if (task) {
       task.isRemoved = true;
       setTasks(tasksCopy);
@@ -66,13 +66,13 @@ const Tasks: React.FC = () => {
 
   return <div className="Tasks">
     <div className="Tasks__Wrapper">
-      <Header margin="0 0 16px 0"/>
+      <Header margin="0 0 16px 0" />
       <div className="Tasks__Wrapper__Body">
         {tasks.filter(task => task.isRemoved === false).map((task) =>
-          <Task 
-            key={task.id} 
-            text={task.text} 
-            isChecked={task.isChecked} 
+          <Task
+            key={task.id}
+            text={task.text}
+            isChecked={task.isChecked}
             onCheckClick={() => handleTaskCheckClick(task.id)}
             onTextChange={(newText: string) => handleTaskTextChange(newText, task.id)}
             onTaskRemove={() => handleTaskRemove(task.id)}
@@ -80,7 +80,7 @@ const Tasks: React.FC = () => {
         )}
       </div>
       <div className="Tasks__Wrapper__ButtonContainer">
-        <Button label="Add Task" onClick={handleTaskAddClick}/>
+        <Button label="Add Task" onClick={handleTaskAddClick} />
       </div>
     </div>
   </div>;

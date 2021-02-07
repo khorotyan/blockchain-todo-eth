@@ -1,4 +1,6 @@
 import React from "react";
+import Input from '@material-ui/core/Input';
+
 import { Checkbox } from "../../../atoms";
 import removeIcon from "../../../assets/Icons/remove.png";
 
@@ -13,15 +15,15 @@ type TaskProps = {
 }
 
 const Task: React.FC<TaskProps> = ({ text, isChecked, onCheckClick, onTextChange, onTaskRemove }) => {
-  const handleTextChange = (event: React.FormEvent<HTMLInputElement>) => {
+  const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onTextChange(event.currentTarget.value);
   }
 
   return <div className="Task">
-    <Checkbox isChecked={isChecked} onCheckClick={onCheckClick}/>
-    <input className="Task__Input" type="text" value={text} onChange={handleTextChange}/>
+    <Checkbox isChecked={isChecked} onCheckClick={onCheckClick} />
+    <Input className="Task__Input" value={text} onChange={handleTextChange} defaultValue="Hello world" />
     <button className="Task__RemoveButton" onClick={onTaskRemove}>
-      <img className="Task__RemoveButton__Icon" src={removeIcon} alt="Remove task"/>
+      <img className="Task__RemoveButton__Icon" src={removeIcon} alt="Remove task" />
     </button>
   </div>
 }
