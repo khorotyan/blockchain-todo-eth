@@ -6,7 +6,7 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({ margin }) => {
   return <div className="Header" style={{ margin }}>
-    <h1 className="Header__AppName">Blockchain ToDo</h1>
+    <h1 className="Header__AppName">Blockchain Tasks</h1>
   </div>
 }
 

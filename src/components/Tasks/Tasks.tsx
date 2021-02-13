@@ -3,35 +3,50 @@ import { useState } from "react";
 import { Button } from "../../atoms";
 import Header from "../Header";
 import Task from "./Task";
+import Create from "./Create";
 
 import "./Tasks.scss";
 
 const randTasks = [
   {
     id: "1",
-    text: "Just a short todo",
+    text: "Show error when Add button is clicked with no text",
     isChecked: false,
     isRemoved: false,
   },
   {
     id: "2",
-    text: "You can mark me as done",
+    text: "Check multiline input",
     isChecked: false,
     isRemoved: false,
   },
   {
     id: "3",
-    text: "Well, you can delete me",
-    isChecked: true,
+    text: "Fix the error of the delete task functionality",
+    isChecked: false,
     isRemoved: false,
   }
 ];
 
 const Tasks: React.FC = () => {
   const [tasks, setTasks] = useState(randTasks);
+  const [newTaskText, setNewTaskText] = useState("");
 
   const handleTaskAddClick = () => {
+    if (newTaskText.length < 3) {
+      return;
+    }
 
+    const newTask = {
+      id: String.fromCharCode(65 + Math.floor(Math.random() * 26)),
+      text: newTaskText,
+      isChecked: false,
+      isRemoved: false,
+    };
+
+    const newTasks = [...tasks, newTask];
+    setTasks(newTasks);
+    setNewTaskText("");
   }
 
   const handleTaskCheckClick = (id: string) => {
@@ -78,6 +93,10 @@ const Tasks: React.FC = () => {
             onTaskRemove={() => handleTaskRemove(task.id)}
           />
         )}
+        <Create
+          text={newTaskText}
+          onTextChange={(newText: string) => setNewTaskText(newText)}
+        />
       </div>
       <div className="Tasks__Wrapper__ButtonContainer">
         <Button label="Add Task" onClick={handleTaskAddClick} />

@@ -1,8 +1,9 @@
 import React from "react";
 import Input from '@material-ui/core/Input';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import IconButton from "@material-ui/core/IconButton";
 
 import { Checkbox } from "../../../atoms";
-import removeIcon from "../../../assets/Icons/remove.png";
 
 import "./Task.scss";
 
@@ -21,10 +22,10 @@ const Task: React.FC<TaskProps> = ({ text, isChecked, onCheckClick, onTextChange
 
   return <div className="Task">
     <Checkbox isChecked={isChecked} onCheckClick={onCheckClick} />
-    <Input className="Task__Input" value={text} onChange={handleTextChange} defaultValue="Hello world" />
-    <button className="Task__RemoveButton" onClick={onTaskRemove}>
-      <img className="Task__RemoveButton__Icon" src={removeIcon} alt="Remove task" />
-    </button>
+    <Input className="Task__Input" value={text} onChange={handleTextChange} />
+    <IconButton className="Task__RemoveButton" onClick={onTaskRemove}>
+      <DeleteOutlineIcon className="Task__RemoveButton__Icon" />
+    </IconButton>
   </div>
 }
 
