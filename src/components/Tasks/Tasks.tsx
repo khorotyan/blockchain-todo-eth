@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { v4 as uuid } from "uuid";
 
 import { Button } from "../../atoms";
 import Header from "../Header";
@@ -9,19 +10,19 @@ import "./Tasks.scss";
 
 const randTasks = [
   {
-    id: "1",
+    id: uuid(),
     text: "Show error when Add button is clicked with no text",
     isChecked: false,
     isRemoved: false,
   },
   {
-    id: "2",
+    id: uuid(),
     text: "Check multiline input",
     isChecked: false,
     isRemoved: false,
   },
   {
-    id: "3",
+    id: uuid(),
     text: "Fix the error of the delete task functionality",
     isChecked: false,
     isRemoved: false,
@@ -33,12 +34,12 @@ const Tasks: React.FC = () => {
   const [newTaskText, setNewTaskText] = useState("");
 
   const handleTaskAddClick = () => {
-    if (newTaskText.length < 3) {
+    if (newTaskText.length < 1) {
       return;
     }
 
     const newTask = {
-      id: String.fromCharCode(65 + Math.floor(Math.random() * 26)),
+      id: uuid(),
       text: newTaskText,
       isChecked: false,
       isRemoved: false,

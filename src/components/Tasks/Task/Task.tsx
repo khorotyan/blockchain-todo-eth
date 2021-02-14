@@ -22,7 +22,7 @@ const Task: React.FC<TaskProps> = ({ text, isChecked, onCheckClick, onTextChange
 
   return <div className="Task">
     <Checkbox isChecked={isChecked} onCheckClick={onCheckClick} />
-    <Input className="Task__Input" value={text} onChange={handleTextChange} />
+    <Input className="Task__Input" multiline rowsMax={5} value={text} onChange={handleTextChange} />
     <IconButton className="Task__RemoveButton" onClick={onTaskRemove}>
       <DeleteOutlineIcon className="Task__RemoveButton__Icon" />
     </IconButton>

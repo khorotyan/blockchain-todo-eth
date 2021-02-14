@@ -14,7 +14,7 @@ const Create: React.FC<CreateProps> = ({ text, onTextChange }) => {
   }
 
   return <div className="Create">
-    <Input className="Create__Input" value={text} onChange={handleTextChange} placeholder="Create a Task..." />
+    <Input className="Create__Input" multiline rowsMax={8} value={text} onChange={handleTextChange} placeholder="Create a Task..." />
   </div>
 }
 
