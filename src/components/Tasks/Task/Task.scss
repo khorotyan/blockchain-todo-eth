@@ -1,0 +1,20 @@
+.Task {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+
+  &__Input {
+    width: 100%;
+    font-size: 1.4rem !important;
+    margin: 0 4px;
+  }
+
+  &__RemoveButton {
+    width: 40px;
+    height: 40px;
+
+    &__Icon {
+      font-size: 2.2rem !important;
+    }
+  }
+}

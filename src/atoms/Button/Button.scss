@@ -1,0 +1,19 @@
+@import "../../constants/styles/colors";
+
+.CustomButton {
+  background-color: $primary_color;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: 0.3s;
+  cursor: pointer;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: $primary_darker_color;
+  }
+}

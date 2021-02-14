@@ -1,0 +1,36 @@
+@import "../../constants/styles/colors";
+
+.Tasks {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $background_color;
+
+  &__Wrapper {
+    width: 100%;
+    min-height: 100vh;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 24px;
+
+    &__Body {
+      min-height: 300px;
+      width: 100%;
+      background-color: white;
+      padding: 24px 24px 48px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-radius: 4px;
+    }
+
+    &__ButtonContainer {
+      margin-top: -24px;
+    }
+  }
+}
