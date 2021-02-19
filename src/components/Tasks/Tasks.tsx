@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuid } from "uuid";
+import Web3 from "web3";
 
 import { Button } from "../../atoms";
 import Header from "../Header";
 import Task from "./Task";
 import Create from "./Create";
+import { tasksAddress, tasksAbi } from "../../constants/config";
 
 import "./Tasks.scss";
 
@@ -32,6 +34,20 @@ const randTasks = [
 const Tasks: React.FC = () => {
   const [tasks, setTasks] = useState(randTasks);
   const [newTaskText, setNewTaskText] = useState("");
+  const [account, setAccount] = useState("");
+
+  useEffect(() => {
+    (async function getEthWallet() {
+      const web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
+      const accounts = await web3.eth.getAccounts();
+      setAccount(accounts[0]);
+
+      // Load deployed contract into the DApp
+      const tasksList = new web3.eth.Contract(tasksAbi, tasksAddress);
+
+      const taskCount = await tasksList.methods.getTasksCount().call();
+    })();
+  }, []);
 
   const handleTaskAddClick = () => {
     if (newTaskText.length < 1) {
