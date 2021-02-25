@@ -32,9 +32,12 @@ const randTasks = [
 ];
 
 const Tasks: React.FC = () => {
-  const [tasks, setTasks] = useState(randTasks);
-  const [newTaskText, setNewTaskText] = useState("");
-  const [account, setAccount] = useState("");
+  const [tasks, setTasks] = useState<any[]>(randTasks);
+  const [newTaskText, setNewTaskText] = useState<string>("");
+  const [account, setAccount] = useState<string>("");
+  const [tasksList, setTasksList] = useState<any>();
+  const [addingTask, setAddingTask] = useState<boolean>(false);
+  const [tasksLoading, setTasksLoading] = useState<boolean>(false);
 
   useEffect(() => {
     (async function getEthWallet() {
@@ -43,9 +46,10 @@ const Tasks: React.FC = () => {
       setAccount(accounts[0]);
 
       // Load deployed contract into the DApp
-      const tasksList = new web3.eth.Contract(tasksAbi, tasksAddress);
+      const tasksListContract = new web3.eth.Contract(tasksAbi, tasksAddress);
+      setTasksList(tasksListContract);
 
-      const taskCount = await tasksList.methods.getTasksCount().call();
+      const taskCount = await tasksListContract.methods.getTasksCount().call();
     })();
   }, []);
 
@@ -53,6 +57,13 @@ const Tasks: React.FC = () => {
     if (newTaskText.length < 1) {
       return;
     }
+
+    setAddingTask(true);
+    tasksList.methods.createTask(newTaskText).send({ from: account })
+      .once("receipt", (receipt: any) => {
+        setAddingTask(false);
+        console.log(receipt);
+      });
 
     const newTask = {
       id: uuid(),
