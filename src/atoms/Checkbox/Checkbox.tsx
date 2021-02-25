@@ -5,16 +5,16 @@ import IconButton from "@material-ui/core/IconButton";
 import "./Checkbox.scss";
 
 type CheckboxProps = {
-  isChecked: boolean,
+  isCompleted: boolean,
   onCheckClick: any,
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({ isChecked = false, onCheckClick }) => {
+const Checkbox: React.FC<CheckboxProps> = ({ isCompleted = false, onCheckClick }) => {
   return <IconButton
     className="CustomCheckbox"
     onClick={onCheckClick}
   >
-    {isChecked ? (
+    {isCompleted ? (
       <CheckBoxIcon className="CustomCheckbox__IconChecked" />
     ) : (
       <CheckBoxOutlineBlankIcon className="CustomCheckbox__Icon" />

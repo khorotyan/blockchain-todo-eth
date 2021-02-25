@@ -14,19 +14,19 @@ const randTasks = [
   {
     id: uuid(),
     text: "Show error when Add button is clicked with no text",
-    isChecked: false,
+    isCompleted: false,
     isRemoved: false,
   },
   {
     id: uuid(),
     text: "Check multiline input",
-    isChecked: false,
+    isCompleted: false,
     isRemoved: false,
   },
   {
     id: uuid(),
     text: "Fix the error of the delete task functionality",
-    isChecked: false,
+    isCompleted: false,
     isRemoved: false,
   }
 ];
@@ -57,7 +57,7 @@ const Tasks: React.FC = () => {
     const newTask = {
       id: uuid(),
       text: newTaskText,
-      isChecked: false,
+      isCompleted: false,
       isRemoved: false,
     };
 
@@ -71,7 +71,7 @@ const Tasks: React.FC = () => {
     const task = tasksCopy.find(task => task.id === id);
 
     if (task) {
-      task.isChecked = !task.isChecked;
+      task.isCompleted = !task.isCompleted;
       setTasks(tasksCopy);
     }
   }
@@ -104,7 +104,7 @@ const Tasks: React.FC = () => {
           <Task
             key={task.id}
             text={task.text}
-            isChecked={task.isChecked}
+            isCompleted={task.isCompleted}
             onCheckClick={() => handleTaskCheckClick(task.id)}
             onTextChange={(newText: string) => handleTaskTextChange(newText, task.id)}
             onTaskRemove={() => handleTaskRemove(task.id)}
