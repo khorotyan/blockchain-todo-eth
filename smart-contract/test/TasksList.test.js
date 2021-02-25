@@ -38,4 +38,14 @@ contract("TasksList", (accounts) => {
     assert.strictEqual(event.isCompleted, false);
     assert.strictEqual(event.isRemoved, false);
   });
+
+  it("Changes task completed status", async () => {
+    const task = await this.tasksList.tasks(1);
+    const result = await this.tasksList.toggleCompleted(1);
+    const event = await result.logs[0].args;
+
+    assert.strictEqual(task.isCompleted, false);
+    assert.strictEqual(event.id.toNumber(), 1);
+    assert.strictEqual(event.isCompleted, true);
+  });
 });

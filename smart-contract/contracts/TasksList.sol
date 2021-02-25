@@ -20,6 +20,11 @@ contract TasksList {
       bool isRemoved
     );
 
+    event TaskCompleted(
+      uint id,
+      bool isCompleted
+    );
+
     constructor() public {
       createTask("Write your everyday tasks in here.");
       createTask("Stay productive by tracking your tasks.");
@@ -31,5 +36,13 @@ contract TasksList {
       tasks[tasksCount] = Task(tasksCount, _text, false, false);
 
       emit TaskCreated(tasksCount, _text, false, false);
+    }
+
+    function toggleCompleted(uint _id) public {
+      Task memory _task = tasks[_id];
+      _task.isCompleted = !_task.isCompleted;
+      tasks[_id] = _task;
+
+      emit TaskCompleted(_id, _task.isCompleted);
     }
 }
