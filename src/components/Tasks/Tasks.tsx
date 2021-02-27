@@ -68,10 +68,14 @@ const Tasks: React.FC = () => {
   const handleTaskCheckClick = (id: string) => {
     const tasksCopy = [...tasks];
     const task = tasksCopy.find(task => task.id === id);
-
+    
     if (task) {
       task.isCompleted = !task.isCompleted;
       setTasks(tasksCopy);
+      tasksList.methods.toggleCompleted(task.id).send({ from: account })
+        .once("receipt", (receipt: any) => {
+          console.log(receipt);
+        });
     }
   }
 

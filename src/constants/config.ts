@@ -1,4 +1,4 @@
-export const tasksAddress: string = "0x98fBaaa9cC513DAA1D1cA6877FBfd6EBC0e825AA";
+export const tasksAddress: string = "0xB03fFcd05Af8B62Fc715Cc3F407b1Be235199Fc4";
 
 export const tasksAbi: any = [
   {
