@@ -10,29 +10,8 @@ import { tasksAddress, tasksAbi } from "../../constants/config";
 
 import "./Tasks.scss";
 
-const randTasks = [
-  {
-    id: uuid(),
-    text: "Show error when Add button is clicked with no text",
-    isCompleted: false,
-    isRemoved: false,
-  },
-  {
-    id: uuid(),
-    text: "Check multiline input",
-    isCompleted: false,
-    isRemoved: false,
-  },
-  {
-    id: uuid(),
-    text: "Fix the error of the delete task functionality",
-    isCompleted: false,
-    isRemoved: false,
-  }
-];
-
 const Tasks: React.FC = () => {
-  const [tasks, setTasks] = useState<any[]>(randTasks);
+  const [tasks, setTasks] = useState<any[]>([]);
   const [newTaskText, setNewTaskText] = useState<string>("");
   const [account, setAccount] = useState<string>("");
   const [tasksList, setTasksList] = useState<any>();
@@ -49,7 +28,16 @@ const Tasks: React.FC = () => {
       const tasksListContract = new web3.eth.Contract(tasksAbi, tasksAddress);
       setTasksList(tasksListContract);
 
-      const taskCount = await tasksListContract.methods.getTasksCount().call();
+      const tasksCount = await tasksListContract.methods.getTasksCount().call();
+
+      setTasksLoading(true);
+      const newTasks: any[] = [];
+      for (let i = 1; i <= tasksCount; i++) {
+        const task = await tasksListContract.methods.tasks(i).call();
+        newTasks.push(task);
+      }
+      setTasks(newTasks);
+      setTasksLoading(false);
     })();
   }, []);
 

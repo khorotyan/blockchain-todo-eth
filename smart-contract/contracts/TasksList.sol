@@ -2,7 +2,7 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 contract TasksList {
-    uint public tasksCount = 0;
+    uint tasksCount = 0;
 
     struct Task {
       uint id;
@@ -29,6 +29,10 @@ contract TasksList {
       createTask("Write your everyday tasks in here.");
       createTask("Stay productive by tracking your tasks.");
       createTask("Have fun!");
+    }
+
+    function getTasksCount() public view returns (uint) {
+      return tasksCount;
     }
 
     function createTask(string memory _text) public {
