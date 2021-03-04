@@ -1,10 +1,29 @@
-export const tasksAddress: string = "0xB03fFcd05Af8B62Fc715Cc3F407b1Be235199Fc4";
+export const tasksAddress: string = "0x0aE1e09756325DFc7fD1d5bc7fb305F35Add1852";
 
 export const tasksAbi: any = [
   {
     "inputs": [],
     "stateMutability": "nonpayable",
     "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "isArchived",
+        "type": "bool"
+      }
+    ],
+    "name": "TaskArchived",
+    "type": "event"
   },
   {
     "anonymous": false,
@@ -49,7 +68,7 @@ export const tasksAbi: any = [
       {
         "indexed": false,
         "internalType": "bool",
-        "name": "isRemoved",
+        "name": "isArchived",
         "type": "bool"
       }
     ],
@@ -67,6 +86,41 @@ export const tasksAbi: any = [
     "name": "createTask",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTasks",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "text",
+            "type": "string"
+          },
+          {
+            "internalType": "bool",
+            "name": "isCompleted",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "isArchived",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct TasksList.Task[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -109,11 +163,24 @@ export const tasksAbi: any = [
       },
       {
         "internalType": "bool",
-        "name": "isRemoved",
+        "name": "isArchived",
         "type": "bool"
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "toggleArchived",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

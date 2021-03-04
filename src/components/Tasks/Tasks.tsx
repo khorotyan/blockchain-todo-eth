@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { v4 as uuid } from "uuid";
 import Web3 from "web3";
 
-import { Button } from "../../atoms";
+import { Button, CircularProgress } from "../../atoms";
 import Header from "../Header";
 import Task from "./Task";
 import Create from "./Create";
@@ -28,12 +28,11 @@ const Tasks: React.FC = () => {
       const tasksListContract = new web3.eth.Contract(tasksAbi, tasksAddress);
       setTasksList(tasksListContract);
 
-      const tasksCount = await tasksListContract.methods.getTasksCount().call();
-
       setTasksLoading(true);
+      const tasks = await tasksListContract.methods.getTasks().call();
       const newTasks: any[] = [];
-      for (let i = 1; i <= tasksCount; i++) {
-        const task = await tasksListContract.methods.tasks(i).call();
+      for (let i = 0; i < tasks.length; i++) {
+        const task = { ...tasks[i] };
         newTasks.push(task);
       }
       setTasks(newTasks);
@@ -57,7 +56,7 @@ const Tasks: React.FC = () => {
       id: uuid(),
       text: newTaskText,
       isCompleted: false,
-      isRemoved: false,
+      isArchived: false,
     };
 
     const newTasks = [...tasks, newTask];
@@ -68,7 +67,7 @@ const Tasks: React.FC = () => {
   const handleTaskCheckClick = (id: string) => {
     const tasksCopy = [...tasks];
     const task = tasksCopy.find(task => task.id === id);
-    
+
     if (task) {
       task.isCompleted = !task.isCompleted;
       setTasks(tasksCopy);
@@ -94,7 +93,7 @@ const Tasks: React.FC = () => {
     const task = tasksCopy.find(task => task.id === id);
 
     if (task) {
-      task.isRemoved = true;
+      task.isArchivedd = true;
       setTasks(tasksCopy);
     }
   }
@@ -103,23 +102,31 @@ const Tasks: React.FC = () => {
     <div className="Tasks__Wrapper">
       <Header margin="0 0 16px 0" />
       <div className="Tasks__Wrapper__Body">
-        {tasks.filter(task => task.isRemoved === false).map((task) =>
-          <Task
-            key={task.id}
-            text={task.text}
-            isCompleted={task.isCompleted}
-            onCheckClick={() => handleTaskCheckClick(task.id)}
-            onTextChange={(newText: string) => handleTaskTextChange(newText, task.id)}
-            onTaskRemove={() => handleTaskRemove(task.id)}
-          />
-        )}
+        {tasksLoading
+          ?
+          <div className="Tasks__Wrapper__Body__LoadingContainer">
+            <CircularProgress margin="0 0 24px 0" />
+          </div>
+          :
+          tasks.filter(task => task.isArchived === false).map((task) =>
+            <Task
+              key={task.id}
+              text={task.text}
+              isCompleted={task.isCompleted}
+              onCheckClick={() => handleTaskCheckClick(task.id)}
+              onTextChange={(newText: string) => handleTaskTextChange(newText, task.id)}
+              onTaskRemove={() => handleTaskRemove(task.id)}
+            />
+          )
+        }
+
         <Create
           text={newTaskText}
           onTextChange={(newText: string) => setNewTaskText(newText)}
         />
       </div>
       <div className="Tasks__Wrapper__ButtonContainer">
-        <Button label="Add Task" onClick={handleTaskAddClick} />
+        <Button label="Add Task" loading={addingTask} onClick={handleTaskAddClick} />
       </div>
     </div>
   </div>;

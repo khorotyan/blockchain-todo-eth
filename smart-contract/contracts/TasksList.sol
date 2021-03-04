@@ -43,17 +43,17 @@ contract TasksList {
     }
 
     function getTasks() public view returns (Task[] memory) {
-      Task[] memory taskArr = new Task[](tasksCount - archivedCount);
+      Task[] memory _taskArr = new Task[](tasksCount - archivedCount);
 
       for (uint i = 0; i < tasksCount; i++) {
         Task memory _task = tasks[i + 1]; 
         
         if (!_task.isArchived) {
-          taskArr[i] = _task;
+          _taskArr[i] = _task;
         }
       }
 
-      return taskArr;
+      return _taskArr;
     }
 
     function createTask(string memory _text) public {
