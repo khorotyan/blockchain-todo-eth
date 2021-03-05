@@ -15,7 +15,7 @@ const Tasks: React.FC = () => {
   const [newTaskText, setNewTaskText] = useState<string>("");
   const [account, setAccount] = useState<string>("");
   const [tasksList, setTasksList] = useState<any>();
-  const [addingTask, setAddingTask] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [tasksLoading, setTasksLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -30,6 +30,7 @@ const Tasks: React.FC = () => {
 
       setTasksLoading(true);
       const tasks = await tasksListContract.methods.getTasks().call();
+      
       const newTasks: any[] = [];
       for (let i = 0; i < tasks.length; i++) {
         const task = { ...tasks[i] };
@@ -45,11 +46,14 @@ const Tasks: React.FC = () => {
       return;
     }
 
-    setAddingTask(true);
+    setLoading(true);
     tasksList.methods.createTask(newTaskText).send({ from: account })
       .once("receipt", (receipt: any) => {
-        setAddingTask(false);
+        setLoading(false);
         console.log(receipt);
+      })
+      .catch((err: any) => {
+        setLoading(false);
       });
 
     const newTask = {
@@ -69,11 +73,15 @@ const Tasks: React.FC = () => {
     const task = tasksCopy.find(task => task.id === id);
 
     if (task) {
-      task.isCompleted = !task.isCompleted;
-      setTasks(tasksCopy);
+      setLoading(true);
       tasksList.methods.toggleCompleted(task.id).send({ from: account })
         .once("receipt", (receipt: any) => {
-          console.log(receipt);
+          task.isCompleted = !task.isCompleted;
+          setTasks(tasksCopy);
+          setLoading(false);
+        })
+        .catch((err: any) => {
+          setLoading(false);
         });
     }
   }
@@ -126,7 +134,7 @@ const Tasks: React.FC = () => {
         />
       </div>
       <div className="Tasks__Wrapper__ButtonContainer">
-        <Button label="Add Task" loading={addingTask} onClick={handleTaskAddClick} />
+        <Button label="Add Task" loading={loading} onClick={handleTaskAddClick} />
       </div>
     </div>
   </div>;
