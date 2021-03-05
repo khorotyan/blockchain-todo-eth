@@ -50,7 +50,8 @@ contract TasksList {
       Task memory _task = tasks[i + 1]; 
       
       if (!_task.isArchived) {
-        _taskArr[i] = _task;
+        _taskArr[_count] = _task;
+        _count++;
       }
     }
 

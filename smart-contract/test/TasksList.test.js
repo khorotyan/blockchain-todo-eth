@@ -4,7 +4,7 @@ const TasksList = artifacts.require('./TasksList.sol');
 
 contract("TasksList", (accounts) => {
   before(async () => {
-    this.tasksList =  await TasksList.deployed();
+    this.tasksList = await TasksList.deployed();
   });
 
   it("Deploys successfully", async () => {
@@ -37,7 +37,7 @@ contract("TasksList", (accounts) => {
     assert.strictEqual(firstTask.isCompleted, false);
   });
 
-  it("Creates tasks", async() => {
+  it("Creates tasks", async () => {
     const taskText = "4th Task";
     const result = await this.tasksList.createTask(taskText);
     const tasksCount = await this.tasksList.getTasksCount();
@@ -60,7 +60,7 @@ contract("TasksList", (accounts) => {
     assert.strictEqual(event.isCompleted, true);
   });
 
-  it("Changes task toggle status", async () => {
+  it("Changes task archived status", async () => {
     const task = await this.tasksList.tasks(1);
     const result = await this.tasksList.toggleArchived(1);
     const event = await result.logs[0].args;
