@@ -97,12 +97,19 @@ const Tasks: React.FC = () => {
   }
 
   const handleTaskRemove = (id: string) => {
-    const tasksCopy = [...tasks];
-    const task = tasksCopy.find(task => task.id === id);
+    const task = tasks.find(task => task.id === id);
 
     if (task) {
-      task.isArchivedd = true;
-      setTasks(tasksCopy);
+      setLoading(true);
+      tasksList.methods.toggleArchived(task.id).send({ from: account })
+        .once("receipt", (receipt: any) => {
+          const tasksCopy = tasks.filter(task => task.id !== id);
+          setTasks(tasksCopy);
+          setLoading(false);
+        })
+        .catch((err: any) => {
+          setLoading(false);
+        });
     }
   }
 
