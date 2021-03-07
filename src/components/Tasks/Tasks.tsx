@@ -50,7 +50,6 @@ const Tasks: React.FC = () => {
     tasksList.methods.createTask(newTaskText).send({ from: account })
       .once("receipt", (receipt: any) => {
         setLoading(false);
-        console.log(receipt);
       })
       .catch((err: any) => {
         setLoading(false);
@@ -70,11 +69,11 @@ const Tasks: React.FC = () => {
 
   const handleTaskCheckClick = (id: string) => {
     const tasksCopy = [...tasks];
-    const task = tasksCopy.find(task => task.id === id);
+    const task = tasksCopy.find((task: any) => task.id === id);
 
     if (task) {
       setLoading(true);
-      tasksList.methods.toggleCompleted(task.id).send({ from: account })
+      tasksList.methods.toggleCompleted(id).send({ from: account })
         .once("receipt", (receipt: any) => {
           task.isCompleted = !task.isCompleted;
           setTasks(tasksCopy);
@@ -97,17 +96,37 @@ const Tasks: React.FC = () => {
   }
 
   const handleTaskRemove = (id: string) => {
-    const task = tasks.find(task => task.id === id);
+    const task = tasks.find((task: any) => task.id === id);
 
     if (task) {
       setLoading(true);
-      tasksList.methods.toggleArchived(task.id).send({ from: account })
+      tasksList.methods.toggleArchived(id).send({ from: account })
         .once("receipt", (receipt: any) => {
-          const tasksCopy = tasks.filter(task => task.id !== id);
+          const tasksCopy = tasks.filter((task: any) => task.id !== id);
           setTasks(tasksCopy);
           setLoading(false);
         })
         .catch((err: any) => {
+          setLoading(false);
+        });
+    }
+  }
+
+  const handleTaskTextChangeOnBlur = (id: string, newText: string) => {
+    const tasksCopy = [...tasks];
+    const task = tasksCopy.find((task: any) => task.id === id);
+
+    if (task && task.text !== task[1]) {
+      setLoading(true);
+      tasksList.methods.modifyTaskText(id, newText).send({ from: account })
+        .once("receipt", (receipt: any) => {
+          task[1] = newText;
+          setTasks(tasksCopy);
+          setLoading(false);
+        })
+        .catch((err: any) => {
+          task.text = task[1];
+          setTasks(tasksCopy);
           setLoading(false);
         });
     }
@@ -130,6 +149,7 @@ const Tasks: React.FC = () => {
               isCompleted={task.isCompleted}
               onCheckClick={() => handleTaskCheckClick(task.id)}
               onTextChange={(newText: string) => handleTaskTextChange(newText, task.id)}
+              onInputBlur={((newText: string) => handleTaskTextChangeOnBlur(task.id, newText))}
               onTaskRemove={() => handleTaskRemove(task.id)}
             />
           )

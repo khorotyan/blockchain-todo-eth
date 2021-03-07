@@ -1,4 +1,4 @@
-export const tasksAddress: string = "0x3f4f4Fd41bd56919C0867C875502e5770e1df43f";
+export const tasksAddress: string = "0x47aE34bF158B9E548E1327Ecd3c34c6a662b1280";
 
 export const tasksAbi: any = [
   {
@@ -76,6 +76,25 @@ export const tasksAbi: any = [
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "text",
+        "type": "string"
+      }
+    ],
+    "name": "TaskTextModified",
+    "type": "event"
+  },
+  {
     "inputs": [
       {
         "internalType": "string",
@@ -134,6 +153,24 @@ export const tasksAbi: any = [
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_newText",
+        "type": "string"
+      }
+    ],
+    "name": "modifyTaskText",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
