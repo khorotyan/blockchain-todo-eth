@@ -52,7 +52,7 @@ contract("TasksList", (accounts) => {
 
   it("Changes task completed status", async () => {
     const task = await this.tasksList.tasks(1);
-    const result = await this.tasksList.toggleCompleted(1);
+    const result = await this.tasksList.toggleCompleted(task.id);
     const event = await result.logs[0].args;
 
     assert.strictEqual(task.isCompleted, false);
@@ -62,11 +62,21 @@ contract("TasksList", (accounts) => {
 
   it("Changes task archived status", async () => {
     const task = await this.tasksList.tasks(1);
-    const result = await this.tasksList.toggleArchived(1);
+    const result = await this.tasksList.toggleArchived(task.id);
     const event = await result.logs[0].args;
 
     assert.strictEqual(task.isArchived, false);
     assert.strictEqual(event.id.toNumber(), 1);
     assert.strictEqual(event.isArchived, true);
+  });
+
+  it("Changes task text", async () => {
+    const newText = "Modified Text!";
+    const task = await this.tasksList.tasks(1);
+    const result = await this.tasksList.modifyTaskText(task.id, newText);
+    const event = await result.logs[0].args;
+
+    assert.strictEqual(task.text, "Write your everyday tasks in here.");
+    assert.strictEqual(event.text, newText);
   });
 });

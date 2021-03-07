@@ -32,6 +32,11 @@ contract TasksList {
     bool isArchived
   );
 
+  event TaskTextModified(
+    uint id,
+    string text
+  );
+
   constructor() public {
     createTask("Write your everyday tasks in here.");
     createTask("Stay productive by tracking your tasks.");
@@ -85,5 +90,13 @@ contract TasksList {
     }
 
     emit TaskArchived(_id, _task.isArchived);
+  }
+
+  function modifyTaskText(uint _id, string memory _newText) public {
+    Task memory _task = tasks[_id];
+    _task.text = _newText;
+    tasks[_id] = _task;
+
+    emit TaskTextModified(_id, _newText);
   }
 }
