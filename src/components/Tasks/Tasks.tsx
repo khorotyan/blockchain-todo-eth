@@ -10,8 +10,19 @@ import { tasksAddress, tasksAbi } from "../../constants/config";
 
 import "./Tasks.scss";
 
+interface TaskItem {
+  id: string;
+  text: string;
+  isCompleted: boolean;
+  isArchived: boolean;
+  0: string;
+  1: string;
+  2: boolean;
+  3: boolean;
+}
+
 const Tasks: React.FC = () => {
-  const [tasks, setTasks] = useState<any[]>([]);
+  const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [newTaskText, setNewTaskText] = useState<string>("");
   const [account, setAccount] = useState<string>("");
   const [tasksList, setTasksList] = useState<any>();
@@ -55,11 +66,15 @@ const Tasks: React.FC = () => {
         setLoading(false);
       });
 
-    const newTask = {
+    const newTask: TaskItem = {
       id: uuid(),
       text: newTaskText,
       isCompleted: false,
       isArchived: false,
+      0: uuid(),
+      1: newTaskText,
+      2: false,
+      3: false,
     };
 
     const newTasks = [...tasks, newTask];
