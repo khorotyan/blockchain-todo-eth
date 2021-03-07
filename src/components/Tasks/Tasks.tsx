@@ -60,26 +60,28 @@ const Tasks: React.FC = () => {
     setLoading(true);
     tasksList.methods.createTask(newTaskText).send({ from: account })
       .once("receipt", (receipt: any) => {
+        const newTaskId = receipt.events.TaskCreated.returnValues.id;
+
+        const newTask: TaskItem = {
+          id: newTaskId,
+          text: newTaskText,
+          isCompleted: false,
+          isArchived: false,
+          0: newTaskId,
+          1: newTaskText,
+          2: false,
+          3: false,
+        };
+    
+        const newTasks = [...tasks, newTask];
+        setTasks(newTasks);
+        setNewTaskText("");
+
         setLoading(false);
       })
       .catch((err: any) => {
         setLoading(false);
       });
-
-    const newTask: TaskItem = {
-      id: uuid(),
-      text: newTaskText,
-      isCompleted: false,
-      isArchived: false,
-      0: uuid(),
-      1: newTaskText,
-      2: false,
-      3: false,
-    };
-
-    const newTasks = [...tasks, newTask];
-    setTasks(newTasks);
-    setNewTaskText("");
   }
 
   const handleTaskCheckClick = (id: string) => {
